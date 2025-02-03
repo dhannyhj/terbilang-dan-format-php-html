@@ -12,7 +12,7 @@ Sebuah komponen web untuk memformat input mata uang Rupiah dan menampilkan terbi
    ```bash
    git clone https://github.com/dhannyhj/terbilang-dan-format-php-html.git
    ```
-2. Buka file `index.html` di browser.
+2. Buka file `terbilang.html` di browser.
 
 ## Cara Penggunaan
 Tambahkan struktur HTML berikut:
