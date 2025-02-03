@@ -10,7 +10,7 @@ Sebuah komponen web untuk memformat input mata uang Rupiah dan menampilkan terbi
 ## Instalasi
 1. Clone repositori:
    ```bash
-   git clone https://github.com/username/repo-name.git
+   git clone https://github.com/dhannyhj/terbilang-dan-format-php-html.git
    ```
 2. Buka file `index.html` di browser.
 
