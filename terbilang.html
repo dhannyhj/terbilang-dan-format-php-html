@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Harga dengan Terbilang</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="form-group">
+      <label for="TxtNilaiKontrak">Harga Nego</label>
+      <input type="text" class="form-control" id="TxtNilaiKontrak" name="TxtNilaiKontrak">
+      <small id="TxtNilaiKontrakTerbilang" class="form-text text-muted"></small>
+    </div>
+    <div class="form-group">
+      <label for="TxtRab">Harga Penawaran</label>
+      <input type="text" class="form-control" id="TxtRab" name="TxtRab">
+      <small id="TxtRabTerbilang" class="form-text text-muted"></small>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi format Rupiah (menangani desimal)
+    function formatRupiah(angka, prefix) {
+      var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split = number_string.split(','),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi),
+          separator = sisa ? '.' : '';
+
+      if (ribuan) {
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+      return prefix ? 'Rp ' + rupiah : rupiah;
+    }
+
+    // Fungsi Terbilang (menangani integer + desimal)
+    function terbilang(angka) {
+      var bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+      var angka = angka.replace(/[^,\d]/g, ''); // Hapus karakter non-digit dan non-koma
+      var splitAngka = angka.split(',');
+      var integerPart = splitAngka[0].replace(/^0+/, '') || '0'; // Ambil bagian integer
+      var decimalPart = splitAngka[1] || ''; // Ambil bagian desimal
+
+      // Proses bagian integer
+      var terbilangInteger = generateTerbilang(parseInt(integerPart)) + " Rupiah";
+
+      // Proses bagian desimal (jika ada)
+      var terbilangDecimal = "";
+      if (decimalPart && parseInt(decimalPart) > 0) {
+        terbilangDecimal = " " + generateTerbilang(parseInt(decimalPart)) + " Sen";
+      }
+
+      return terbilangInteger + terbilangDecimal;
+    }
+
+    // Helper untuk rekursi terbilang
+    function generateTerbilang(angka) {
+      var bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+      if (angka < 12) return bilangan[angka];
+      if (angka < 20) return bilangan[angka - 10] + " Belas";
+      if (angka < 100) return bilangan[Math.floor(angka / 10)] + " Puluh " + generateTerbilang(angka % 10);
+      if (angka < 200) return "Seratus " + generateTerbilang(angka - 100);
+      if (angka < 1000) return bilangan[Math.floor(angka / 100)] + " Ratus " + generateTerbilang(angka % 100);
+      if (angka < 2000) return "Seribu " + generateTerbilang(angka - 1000);
+      if (angka < 1e6) return generateTerbilang(Math.floor(angka / 1e3)) + " Ribu " + generateTerbilang(angka % 1e3);
+      if (angka < 1e9) return generateTerbilang(Math.floor(angka / 1e6)) + " Juta " + generateTerbilang(angka % 1e6);
+      if (angka < 1e12) return generateTerbilang(Math.floor(angka / 1e9)) + " Miliar " + generateTerbilang(angka % 1e9);
+      if (angka < 1e15) return generateTerbilang(Math.floor(angka / 1e12)) + " Triliun " + generateTerbilang(angka % 1e12);
+      return "";
+    }
+
+    // Event listener untuk input
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = [
+        { input: 'TxtNilaiKontrak', output: 'TxtNilaiKontrakTerbilang' },
+        { input: 'TxtRab', output: 'TxtRabTerbilang' }
+      ];
+
+      inputs.forEach(({ input, output }) => {
+        const field = document.getElementById(input);
+        const terbilangEl = document.getElementById(output);
+
+        field.addEventListener('keyup', function() {
+          // Format tampilan Rupiah
+          this.value = formatRupiah(this.value, 'Rp ');
+          
+          // Update terbilang
+          const angka = this.value.replace(/[^,\d]/g, '');
+          terbilangEl.textContent = `/${terbilang(angka)}/`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
