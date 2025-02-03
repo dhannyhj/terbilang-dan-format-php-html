@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Harga dengan Terbilang</title>
+  <title>Terbilang dan Format Penulisan</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container mt-5">
     <div class="form-group">
-      <label for="TxtNilaiKontrak">Harga Nego</label>
-      <input type="text" class="form-control" id="TxtNilaiKontrak" name="TxtNilaiKontrak">
-      <small id="TxtNilaiKontrakTerbilang" class="form-text text-muted"></small>
+      <label for="txtharga1">Harga Satu</label>
+      <input type="text" class="form-control" id="txtharga1" name="txtharga1">
+      <small id="txtharga1Terbilang" class="form-text text-muted"></small>
     </div>
     <div class="form-group">
-      <label for="TxtRab">Harga Penawaran</label>
-      <input type="text" class="form-control" id="TxtRab" name="TxtRab">
-      <small id="TxtRabTerbilang" class="form-text text-muted"></small>
+      <label for="txtharga2">Harga dua</label>
+      <input type="text" class="form-control" id="txtharga2" name="txtharga2">
+      <small id="txtharga2Terbilang" class="form-text text-muted"></small>
     </div>
   </div>
 
@@ -77,8 +77,8 @@
     // Event listener untuk input
     document.addEventListener('DOMContentLoaded', function() {
       const inputs = [
-        { input: 'TxtNilaiKontrak', output: 'TxtNilaiKontrakTerbilang' },
-        { input: 'TxtRab', output: 'TxtRabTerbilang' }
+        { input: 'txtharga1', output: 'txtharga1Terbilang' },
+        { input: 'txtharga2', output: 'txtharga2Terbilang' }
       ];
 
       inputs.forEach(({ input, output }) => {
